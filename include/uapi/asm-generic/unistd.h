@@ -852,8 +852,20 @@ __SYSCALL(__NR_removexattrat, sys_removexattrat)
 #define __NR_open_tree_attr 467
 __SYSCALL(__NR_open_tree_attr, sys_open_tree_attr)
 
+#define __NR_stack_create 468
+__SYSCALL(__NR_stack_create, sys_stack_create)
+
+#define __NR_stack_destroy 469
+__SYSCALL(__NR_stack_destroy, sys_stack_destroy)
+
+#define __NR_stack_append 470
+__SYSCALL(__NR_stack_append, sys_stack_append)
+
+#define __NR_stack_pop 471
+__SYSCALL(__NR_stack_pop, sys_stack_pop)
+
 #undef __NR_syscalls
-#define __NR_syscalls 468
+#define __NR_syscalls 472
 
 /*
  * 32 bit systems traditionally used different

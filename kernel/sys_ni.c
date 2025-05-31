@@ -173,6 +173,11 @@ COND_SYSCALL(lsm_get_self_attr);
 COND_SYSCALL(lsm_set_self_attr);
 COND_SYSCALL(lsm_list_modules);
 
+COND_SYSCALL(stack_create);
+COND_SYSCALL(stack_destroy);
+COND_SYSCALL(stack_append);
+COND_SYSCALL(stack_pop);
+
 /* CONFIG_MMU only */
 COND_SYSCALL(swapon);
 COND_SYSCALL(swapoff);

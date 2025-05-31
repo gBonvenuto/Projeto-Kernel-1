@@ -392,6 +392,12 @@
 466	common	removexattrat		sys_removexattrat
 467	common	open_tree_attr		sys_open_tree_attr
 
+# SYSCALLS NOVAS
+468 common stack_create sys_stack_create
+469 common stack_destroy sys_stack_destroy
+470 common stack_append sys_stack_append
+471 common stack_pop sys_stack_pop
+
 #
 # Due to a historical design error, certain syscalls are numbered differently
 # in x32 as compared to native x86_64.  These syscalls have numbers 512-547.
@@ -412,7 +418,7 @@
 523	x32	rt_sigtimedwait		compat_sys_rt_sigtimedwait_time64
 524	x32	rt_sigqueueinfo		compat_sys_rt_sigqueueinfo
 525	x32	sigaltstack		compat_sys_sigaltstack
-526	x32	timer_create		compat_sys_timer_create
+526	x32	timer_71create		compat_sys_timer_create
 527	x32	mq_notify		compat_sys_mq_notify
 528	x32	kexec_load		compat_sys_kexec_load
 529	x32	waitid			compat_sys_waitid
