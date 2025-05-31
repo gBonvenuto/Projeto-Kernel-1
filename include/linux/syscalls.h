@@ -957,7 +957,7 @@ asmlinkage long sys_open_tree_attr(int dfd, const char __user *path,
 				   size_t usize);
 
 // SYSCALLS NOVAS
-asmlinkage long sys_stack_create(int val, void __user *ptr);
+asmlinkage long sys_stack_create(int val, void __user **ptr);
 asmlinkage long sys_stack_destroy(void __user *ptr);
 asmlinkage long sys_stack_append(void __user *ptr, int val);
 asmlinkage long sys_stack_pop(void __user *ptr, int __user *out_val);
