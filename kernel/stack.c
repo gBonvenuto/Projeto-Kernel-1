@@ -9,22 +9,19 @@ struct Stack {
   struct Node* top;
 };
 
-SYSCALL_DEFINE2(stack_create, int, val, void __user **, ptr){
-  pr_info("### Criando stack");
+SYSCALL_DEFINE1(stack_create, size_t *, ptr){
   struct Stack* stack = kmalloc(sizeof(struct Stack), GFP_KERNEL);
-  struct Node* node = kmalloc(sizeof(struct Node), GFP_KERNEL);
-  node->prev = NULL;
-  node->val = val;
-  stack->top = node;
+  pr_info("### Criando stack %p", stack);
+  stack->top = NULL;
   if(copy_to_user(ptr, &stack, sizeof(void*))){
 	  return -EFAULT;
   }
   return 0;
 }
 
-SYSCALL_DEFINE1(stack_destroy, void __user *, ptr){
-  pr_info("### Começando a destruir o Stack");
+SYSCALL_DEFINE1(stack_destroy, size_t, ptr){
   struct Stack* stack = (struct Stack*)ptr;
+  pr_info("### Começando a destruir o Stack %p", stack);
   if (stack == NULL) {
 	  return -EFAULT;
   }
@@ -39,9 +36,9 @@ SYSCALL_DEFINE1(stack_destroy, void __user *, ptr){
   return 0;
 }
 
-SYSCALL_DEFINE2(stack_append, void __user *, ptr, int, val){
-  pr_info("### Adicionando valor %d ao stack", val);
+SYSCALL_DEFINE2(stack_append, size_t, ptr, int, val){
   struct Stack *stack = (struct Stack*)ptr;
+  pr_info("### Adicionando valor %d ao stack %p", val, stack);
   struct Node *new = kmalloc(sizeof(int), GFP_KERNEL);
   new->prev = stack->top;
   new->val = val;
@@ -49,17 +46,17 @@ SYSCALL_DEFINE2(stack_append, void __user *, ptr, int, val){
   return 0;
 }
 
-SYSCALL_DEFINE2(stack_pop, void __user *, ptr, int __user *, out_val){
+SYSCALL_DEFINE2(stack_pop, size_t, ptr, int __user *, out_val){
   struct Stack* stack = (struct Stack*)ptr;
   if (stack->top == NULL) {
-    return 0;
+    return -EFAULT;
   }
   struct Node* curr = stack->top;
   *out_val = curr->val;
+  pr_info("### Pop do valor %d do stack %p", curr->val, stack);
   if(copy_to_user(out_val, &curr->val, sizeof(int))){
 	  return -EFAULT;
   }
-  pr_info("### Pop do valor %d", curr->val);
   stack->top = stack->top->prev;
   kfree(curr);
   return 0;
