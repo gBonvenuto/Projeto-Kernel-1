@@ -37,9 +37,9 @@ SYSCALL_DEFINE1(stack_destroy, size_t, ptr){
 }
 
 SYSCALL_DEFINE2(stack_append, size_t, ptr, int, val){
-  struct Stack *stack = (struct Stack*)ptr;
+  struct Stack stack = (struct Stack)ptr;
   pr_info("### Adicionando valor %d ao stack %p", val, stack);
-  struct Node *new = kmalloc(sizeof(int), GFP_KERNEL);
+  struct Node *new = kmalloc(sizeof(struct Node), GFP_KERNEL);
   new->prev = stack->top;
   new->val = val;
   stack->top = new;
@@ -52,7 +52,6 @@ SYSCALL_DEFINE2(stack_pop, size_t, ptr, int __user *, out_val){
     return -EFAULT;
   }
   struct Node* curr = stack->top;
-  *out_val = curr->val;
   pr_info("### Pop do valor %d do stack %p", curr->val, stack);
   if(copy_to_user(out_val, &curr->val, sizeof(int))){
 	  return -EFAULT;
